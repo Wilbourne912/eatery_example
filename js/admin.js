@@ -60,6 +60,7 @@ async function loadReservations() {
       <p>${res.reservation_date} at ${res.reservation_time}</p>
       <p>Phone: ${res.phone}</p>
       <p class="status-${res.status}">Status: ${res.status}</p>
+      ${res.slot_was_full ? '<p style="color:#b00020; font-weight:600;">⚠ Slot was at/over capacity when booked</p>' : ''}
       <div class="btn-row">
         <button class="btn-confirm" onclick="updateReservationStatus(${res.id}, 'confirmed')">Confirm</button>
         <button class="btn-decline" onclick="updateReservationStatus(${res.id}, 'declined')">Decline</button>

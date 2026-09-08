@@ -27,6 +27,13 @@ loginBtn.addEventListener("click", () => {
   }
 });
 
+document.getElementById("logout-btn").addEventListener("click", () => {
+  adminContent.style.display = "none";
+  loginGate.style.display = "flex";
+  document.getElementById("admin-password").value = "";
+  loginError.textContent = "";
+});
+
 // ---------- RESERVATIONS ----------
 
 async function loadReservations() {

@@ -209,6 +209,27 @@
       font-weight: 600;
     }
 
+    #order-type-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .order-type-btn {
+      padding: 0.6rem 1.2rem;
+      border: 1px solid #222;
+      background: #fff;
+      color: #222;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .order-type-btn.active {
+      background: #222;
+      color: #fff;
+    }
+
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -243,34 +264,45 @@
 
     <section id="order">
       <h2>Order Online</h2>
-      <div id="delivery-option"></div>
-      <div id="order-menu-list">
-        <p>Loading menu...</p>
+
+      <div id="order-type-toggle">
+        <button type="button" id="toggle-pickup" class="order-type-btn active">Pickup</button>
+        <button type="button" id="toggle-delivery" class="order-type-btn">Delivery</button>
       </div>
 
-      <div id="cart-box">
-        <h3>Your Order</h3>
-        <div id="cart-list">
-          <p>Your cart is empty.</p>
+      <div id="pickup-flow">
+        <div id="order-menu-list">
+          <p>Loading menu...</p>
         </div>
-        <p id="cart-total"></p>
 
-        <form id="checkout-form">
-          <label>
-            Name
-            <input type="text" id="order-name" required>
-          </label>
-          <label>
-            Phone
-            <input type="tel" id="order-phone" required>
-          </label>
-          <label>
-            Notes (optional)
-            <textarea id="order-notes" rows="2"></textarea>
-          </label>
+        <div id="cart-box">
+          <h3>Your Order</h3>
+          <div id="cart-list">
+            <p>Your cart is empty.</p>
+          </div>
+          <p id="cart-total"></p>
+
+          <form id="checkout-form">
+            <label>
+              Name
+              <input type="text" id="order-name" required>
+            </label>
+            <label>
+              Phone
+              <input type="tel" id="order-phone" required>
+            </label>
+            <label>
+              Notes (optional)
+              <textarea id="order-notes" rows="2"></textarea>
+            </label>
           <button type="submit" id="checkout-btn" disabled>Place Pickup Order</button>
         </form>
         <p id="checkout-status"></p>
+      </div>
+      </div>
+
+      <div id="delivery-flow" style="display:none;">
+        <div id="delivery-option"></div>
       </div>
     </section>
 
@@ -319,3 +351,4 @@
   <script src="js/ordering.js"></script>
 </body>
 </html>
+

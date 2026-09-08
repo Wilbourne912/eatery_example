@@ -190,10 +190,32 @@ async function loadDeliveryOption() {
   } else if (data.delivery_mode === "self" && data.delivery_note) {
     deliveryBox.innerHTML = `<p>${data.delivery_note}</p>`;
   } else {
-    deliveryBox.innerHTML = ""; // delivery_mode is "none" — show nothing
+    deliveryBox.innerHTML = "<p>Delivery isn't available right now — pickup only.</p>";
   }
 }
 
 loadOrderMenu();
 renderCart();
 loadDeliveryOption();
+
+// ---------- PICKUP / DELIVERY TOGGLE ----------
+
+const toggleR = document.getElementById("toggle-pickup");
+const toggleD = document.getElementById("toggle-delivery");
+const pickupFlow = document.getElementById("pickup-flow");
+const deliveryFlow = document.getElementById("delivery-flow");
+
+toggleR.addEventListener("click", () => {
+  toggleR.classList.add("active");
+  toggleD.classList.remove("active");
+  pickupFlow.style.display = "block";
+  deliveryFlow.style.display = "none";
+});
+
+toggleD.addEventListener("click", () => {
+  toggleD.classList.add("active");
+  toggleR.classList.remove("active");
+  deliveryFlow.style.display = "block";
+  pickupFlow.style.display = "none";
+});
+

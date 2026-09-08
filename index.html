@@ -102,6 +102,113 @@
       font-weight: 600;
     }
 
+    #order-menu-list .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #eee;
+      gap: 1rem;
+    }
+
+    #order-menu-list .order-item.unavailable {
+      opacity: 0.4;
+    }
+
+    #order-menu-list button {
+      padding: 0.4rem 0.9rem;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #cart-box {
+      margin-top: 2rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qty-controls button {
+      width: 1.8rem;
+      height: 1.8rem;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #cart-total {
+      font-weight: 700;
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    #checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    #checkout-form label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 600;
+      font-size: 0.9rem;
+      gap: 0.25rem;
+    }
+
+    #checkout-form input, #checkout-form textarea {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+
+    #checkout-btn {
+      padding: 0.75rem;
+      font-weight: 600;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #checkout-btn:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .delivery-link-btn {
+      display: inline-block;
+      margin: 0.5rem 0 1rem;
+      padding: 0.6rem 1rem;
+      background: #4A5D3A;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -131,6 +238,39 @@
       <div id="menu-list">
         <!-- menu items get injected here by menu.js -->
         <p>Loading menu...</p>
+      </div>
+    </section>
+
+    <section id="order">
+      <h2>Order Online</h2>
+      <div id="delivery-option"></div>
+      <div id="order-menu-list">
+        <p>Loading menu...</p>
+      </div>
+
+      <div id="cart-box">
+        <h3>Your Order</h3>
+        <div id="cart-list">
+          <p>Your cart is empty.</p>
+        </div>
+        <p id="cart-total"></p>
+
+        <form id="checkout-form">
+          <label>
+            Name
+            <input type="text" id="order-name" required>
+          </label>
+          <label>
+            Phone
+            <input type="tel" id="order-phone" required>
+          </label>
+          <label>
+            Notes (optional)
+            <textarea id="order-notes" rows="2"></textarea>
+          </label>
+          <button type="submit" id="checkout-btn" disabled>Place Pickup Order</button>
+        </form>
+        <p id="checkout-status"></p>
       </div>
     </section>
 
@@ -175,6 +315,7 @@
   <script src="js/menu.js"></script>
   <!-- Reservation form logic -->
   <script src="js/reservations.js"></script>
+  <!-- Online ordering / cart logic -->
+  <script src="js/ordering.js"></script>
 </body>
 </html>
-

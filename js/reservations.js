@@ -29,7 +29,7 @@ reservationForm.addEventListener("submit", async (event) => {
     ]);
 
   if (error) {
-    reservationStatus.textContent = "Something went wrong. Please try again.";
+    reservationStatus.textContent = "ERROR: " + error.message + " (code: " + (error.code || "none") + ")";
     console.error("Supabase error:", error);
     return;
   }

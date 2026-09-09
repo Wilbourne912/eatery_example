@@ -30,7 +30,8 @@ async function loadOrderMenu() {
 
   orderMenuList.innerHTML = data.map(item => `
     <div class="order-item ${item.is_available ? "" : "unavailable"}">
-      <div>
+      <div class="order-photo media-placeholder">PHOTO</div>
+      <div class="order-item-info">
         <strong>${item.name}</strong>
         <p>${item.description || ""}</p>
         <p>${item.is_available ? "$" + item.price : "Sold Out"}</p>

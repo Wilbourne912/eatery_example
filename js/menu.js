@@ -23,12 +23,15 @@ async function loadMenu() {
 
   menuList.innerHTML = data.map(item => `
     <div class="menu-item ${item.is_available ? "" : "unavailable"}">
-      <div>
-        <strong>${item.name}</strong>
-        <p>${item.description || ""}</p>
-      </div>
-      <div>
-        ${item.is_available ? `$${item.price}` : "Sold Out"}
+      <div class="menu-photo media-placeholder">PHOTO</div>
+      <div class="menu-item-body">
+        <div>
+          <div class="menu-item-name">${item.name}</div>
+          <div class="menu-item-desc">${item.description || ""}</div>
+        </div>
+        <div class="menu-item-price">
+          ${item.is_available ? `$${item.price}` : "Sold Out"}
+        </div>
       </div>
     </div>
   `).join("");

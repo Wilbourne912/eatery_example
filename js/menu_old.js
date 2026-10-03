@@ -1,11 +1,6 @@
 // Fetches menu items from Supabase and renders them into #menu-list
 // Assumes a "menu_items" table with columns:
-// id, name, description, price, is_available, image_url
-// image_url is optional. Items without one use menu-default.jpg from the "site-images" bucket
-
-const MENU_FALLBACK_IMAGE = supabaseClient.storage
-  .from("site-images")
-  .getPublicUrl("menu-default.jpg").data.publicUrl;
+// id, name, description, price, is_available
 
 async function loadMenu() {
   const menuList = document.getElementById("menu-list");
@@ -28,12 +23,7 @@ async function loadMenu() {
 
   menuList.innerHTML = data.map(item => `
     <div class="menu-item ${item.is_available ? "" : "unavailable"}">
-      <img class="menu-photo media-img"
-           src="${item.image_url || MENU_FALLBACK_IMAGE}"
-           alt="${item.name}"
-           width="144" height="144"
-           loading="lazy"
-           onerror="this.onerror=null;this.src='${MENU_FALLBACK_IMAGE}';">
+      <div class="menu-photo media-placeholder">PHOTO</div>
       <div class="menu-item-body">
         <div>
           <div class="menu-item-name">${item.name}</div>
@@ -48,3 +38,4 @@ async function loadMenu() {
 }
 
 loadMenu();
+

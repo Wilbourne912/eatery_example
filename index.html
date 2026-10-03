@@ -124,10 +124,22 @@
       line-height: 1.4;
     }
 
-    #hero .hero-media {
+    .media-img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+      background: #EAE2D2;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+    }
+
+#hero .hero-media {
       flex: 1;
       min-height: 260px;
+      height: auto;
+      aspect-ratio: 16 / 10;
     }
+
 
     /* ---------- Sections (general) ---------- */
     main section {
@@ -199,8 +211,10 @@
       margin-bottom: 1.5rem;
     }
 
-    #atmosphere .atmosphere-grid .media-placeholder {
+    #atmosphere .atmosphere-grid .media-placeholder,
+    #atmosphere .atmosphere-grid .media-img {
       aspect-ratio: 4 / 3;
+      height: auto;
       font-size: 0.75rem;
     }
 
@@ -462,9 +476,7 @@
         <p class="hero-sub">Real ingredients, a short walk from wherever you are. Book a table or order ahead — no phone tag required.</p>
         <a href="#reserve" class="btn-primary">Reserve a table</a>
       </div>
-      <div class="hero-media media-placeholder">
-        HERO PHOTO OR VIDEO<br>Signature dish or dining room, full width
-      </div>
+      <img class="hero-media media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/hero.jpg" alt="Signature dish at Eatery Example" width="1000" height="640">
     </section>
 
     <section id="menu">
@@ -478,8 +490,8 @@
     <section id="atmosphere">
       <h2>The Space</h2>
       <div class="atmosphere-grid">
-        <div class="media-placeholder">DINING ROOM PHOTO</div>
-        <div class="media-placeholder">KITCHEN OR BAR PHOTO</div>
+        <img class="media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/dining-room.jpg" alt="Dining room at Eatery Example" width="800" height="600" loading="lazy">
+        <img class="media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/kitchen-bar.jpg" alt="Kitchen and bar at Eatery Example" width="800" height="600" loading="lazy">
       </div>
       <p>A neighborhood spot built for regulars — good light, easy conversation, and a kitchen that doesn't rush the tomatoes.</p>
     </section>
@@ -531,7 +543,7 @@
     <section id="reserve">
       <h2>Reserve a Table</h2>
       <div class="reserve-intro">
-        <div class="reserve-media media-placeholder">TABLE / AMBIANCE PHOTO</div>
+        <img class="reserve-media media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/table.jpg" alt="Set table at Eatery Example" width="280" height="280" loading="lazy">
         <p style="color:#4a433a;">Tell us when you're coming and how many — we'll confirm shortly.</p>
       </div>
       <form id="reservation-form">

@@ -7,10 +7,6 @@
 
 let cart = []; // each entry: { menu_item_id, name, price, quantity }
 
-const ORDER_FALLBACK_IMAGE = supabaseClient.storage
-  .from("site-images")
-  .getPublicUrl("menu-default.jpg").data.publicUrl;
-
 // ---------- LOAD ORDER MENU (separate render target from the read-only menu display) ----------
 
 async function loadOrderMenu() {
@@ -34,7 +30,7 @@ async function loadOrderMenu() {
 
   orderMenuList.innerHTML = data.map(item => `
     <div class="order-item ${item.is_available ? "" : "unavailable"}">
-      <img class="order-photo media-img" src="${item.image_url || ORDER_FALLBACK_IMAGE}" alt="${item.name}" width="112" height="112" loading="lazy" onerror="this.onerror=null;this.src='${ORDER_FALLBACK_IMAGE}';">
+      <img class="order-photo media-img" src="${item.image_url || MENU_FALLBACK_IMAGE}" alt="${item.name}" width="112" height="112" loading="lazy" onerror="this.onerror=null;this.src='${MENU_FALLBACK_IMAGE}';">
       <div class="order-item-info">
         <strong>${item.name}</strong>
         <p>${item.description || ""}</p>
@@ -223,3 +219,4 @@ toggleD.addEventListener("click", () => {
   deliveryFlow.style.display = "block";
   pickupFlow.style.display = "none";
 });
+

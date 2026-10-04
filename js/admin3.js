@@ -1,10 +1,9 @@
 // ADMIN PANEL LOGIC
 //
-// Login uses Supabase Auth (email + password). People can create their own
-// admin account from the login screen, so this page is meant for a demo
-// project with sample data. Uploads and edits only work for logged-in users
-// because the policies in setup.sql are limited to the "authenticated" role.
-// Manage or delete accounts in Supabase under Authentication > Users.
+// Login uses Supabase Auth (email + password). Uploads and edits only work
+// for a logged-in user because the policies in setup.sql are limited to the
+// "authenticated" role. Create the admin user in the Supabase dashboard under
+// Authentication > Users, and turn off public sign-ups.
 
 const SITE_BUCKET = "site-images";
 
@@ -27,7 +26,6 @@ const SITE_TEXT_FIELDS = [
 const loginGate = document.getElementById("login-gate");
 const adminContent = document.getElementById("admin-content");
 const loginBtn = document.getElementById("login-btn");
-const signupBtn = document.getElementById("signup-btn");
 const loginError = document.getElementById("login-error");
 
 function esc(value) {
@@ -43,9 +41,7 @@ function publicUrl(path) {
   return supabaseClient.storage.from(SITE_BUCKET).getPublicUrl(path).data.publicUrl;
 }
 
-// ---------- LOGIN / SIGN UP / LOGOUT ----------
-
-const loginMessage = document.getElementById("login-message");
+// ---------- LOGIN / LOGOUT ----------
 
 function showAdmin() {
   loginGate.style.display = "none";
@@ -61,30 +57,15 @@ function showAdmin() {
 function showLogin() {
   adminContent.style.display = "none";
   loginGate.style.display = "flex";
-  document.getElementById("signup-step").style.display = "none";
-  document.getElementById("login-step").style.display = "flex";
-  document.getElementById("login-password").value = "";
+  document.getElementById("admin-password").value = "";
   loginError.textContent = "";
-}
-
-function showSignup() {
-  document.getElementById("login-step").style.display = "none";
-  document.getElementById("signup-step").style.display = "flex";
-  loginError.textContent = "";
-  loginMessage.textContent = "";
 }
 
 async function handleLogin() {
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value;
-
-  if (!email || !password) {
-    loginError.textContent = "Enter your email and password.";
-    return;
-  }
+  const email = document.getElementById("admin-email").value.trim();
+  const password = document.getElementById("admin-password").value;
 
   loginError.textContent = "";
-  loginMessage.textContent = "";
   loginBtn.disabled = true;
 
   const { error } = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
@@ -99,61 +80,14 @@ async function handleLogin() {
   showAdmin();
 }
 
-async function handleSignup() {
-  const email = document.getElementById("signup-email").value.trim();
-  const password = document.getElementById("signup-password").value;
-
-  if (!email || !password) {
-    loginError.textContent = "Enter an email and choose a password.";
-    return;
-  }
-
-  loginError.textContent = "";
-  loginMessage.textContent = "";
-  signupBtn.disabled = true;
-
-  const { data, error } = await supabaseClient.auth.signUp({
-    email: email,
-    password: password,
-    options: { emailRedirectTo: window.location.origin + window.location.pathname },
-  });
-
-  signupBtn.disabled = false;
-
-  if (error) {
-    loginError.textContent = "Could not create the account: " + error.message;
-    return;
-  }
-
-  if (data && data.session) {
-    showAdmin();
-    return;
-  }
-
-  document.getElementById("login-email").value = email;
-  showLogin();
-  loginMessage.textContent = "Account created. Check your email to confirm it, then log in.";
-}
-
 loginBtn.addEventListener("click", handleLogin);
-signupBtn.addEventListener("click", handleSignup);
-document.getElementById("show-signup-btn").addEventListener("click", showSignup);
-document.getElementById("show-login-btn").addEventListener("click", () => {
-  loginMessage.textContent = "";
-  showLogin();
-});
 
-document.getElementById("login-password").addEventListener("keydown", (event) => {
+document.getElementById("admin-password").addEventListener("keydown", (event) => {
   if (event.key === "Enter") handleLogin();
-});
-
-document.getElementById("signup-password").addEventListener("keydown", (event) => {
-  if (event.key === "Enter") handleSignup();
 });
 
 document.getElementById("logout-btn").addEventListener("click", async () => {
   await supabaseClient.auth.signOut();
-  loginMessage.textContent = "";
   showLogin();
 });
 

@@ -133,13 +133,12 @@
       border-radius: 4px;
     }
 
-#hero .hero-media {
+    #hero .hero-media {
       flex: 1;
       min-height: 260px;
       height: auto;
       aspect-ratio: 16 / 10;
     }
-
 
     /* ---------- Sections (general) ---------- */
     main section {
@@ -397,7 +396,9 @@
 
     #reserve .reserve-media {
       width: 140px;
-      height: 140px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       flex-shrink: 0;
       font-size: 0.6rem;
     }
@@ -461,7 +462,7 @@
 <body>
 
   <header class="site-header">
-    <h1>Eatery Example</h1>
+    <h1 data-content="restaurant_name">Eatery Example</h1>
     <nav>
       <a href="#menu">Menu</a>
       <a href="#order">Order</a>
@@ -472,8 +473,8 @@
   <main>
     <section id="hero">
       <div class="hero-text">
-        <h2>Good food. No hassle.</h2>
-        <p class="hero-sub">Real ingredients, a short walk from wherever you are. Book a table or order ahead — no phone tag required.</p>
+        <h2 data-content="hero_headline">Good food. No hassle.</h2>
+        <p class="hero-sub" data-content="hero_subtext">Real ingredients, a short walk from wherever you are. Book a table or order ahead — no phone tag required.</p>
         <a href="#reserve" class="btn-primary">Reserve a table</a>
       </div>
       <img class="hero-media media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/hero.jpg" alt="Signature dish at Eatery Example" width="1000" height="640">
@@ -493,7 +494,7 @@
         <img class="media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/dining-room.jpg" alt="Dining room at Eatery Example" width="800" height="600" loading="lazy">
         <img class="media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/kitchen-bar.jpg" alt="Kitchen and bar at Eatery Example" width="800" height="600" loading="lazy">
       </div>
-      <p>A neighborhood spot built for regulars — good light, easy conversation, and a kitchen that doesn't rush the tomatoes.</p>
+      <p data-content="space_text">A neighborhood spot built for regulars — good light, easy conversation, and a kitchen that doesn't rush the tomatoes.</p>
     </section>
 
     <section id="order">
@@ -544,7 +545,7 @@
       <h2>Reserve a Table</h2>
       <div class="reserve-intro">
         <img class="reserve-media media-img" src="https://ovygjftgflmrrjasixri.supabase.co/storage/v1/object/public/site-images/table.jpg" alt="Set table at Eatery Example" width="280" height="280" loading="lazy">
-        <p style="color:#4a433a;">Tell us when you're coming and how many — we'll confirm shortly.</p>
+        <p style="color:#4a433a;" data-content="reserve_text">Tell us when you're coming and how many — we'll confirm shortly.</p>
       </div>
       <form id="reservation-form">
         <label>
@@ -574,13 +575,26 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Eatery Example</p>
+    <p>&copy; 2026 <span data-content="restaurant_name">Eatery Example</span></p>
   </footer>
 
   <!-- Supabase client library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Your Supabase URL/key -->
   <script src="js/supabase-config.js"></script>
+  <!-- Editable site text from the Supabase "site_content" table -->
+  <script>
+    supabaseClient.from("site_content").select("key, value").then(function (result) {
+      if (result.error || !result.data) return;
+      var content = {};
+      result.data.forEach(function (row) { content[row.key] = row.value; });
+      document.querySelectorAll("[data-content]").forEach(function (el) {
+        var value = content[el.dataset.content];
+        if (value) el.textContent = value;
+      });
+      if (content.restaurant_name) document.title = content.restaurant_name;
+    });
+  </script>
   <!-- Menu loading logic -->
   <script src="js/menu.js"></script>
   <!-- Reservation form logic -->
@@ -589,4 +603,3 @@
   <script src="js/ordering.js"></script>
 </body>
 </html>
-
